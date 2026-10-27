@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="border-t border-stroke">
       <div className="container-page grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:py-24">
         <div>
-          <Logo />
+          <Logo className="h-20" />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-mute">
             Servicios eléctricos, mecánicos, neumáticos y de automatización industrial en Guatemala.
           </p>

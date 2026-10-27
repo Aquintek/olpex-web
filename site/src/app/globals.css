@@ -94,7 +94,7 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 88px;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -104,6 +104,20 @@
   body {
     @apply bg-canvas text-ink;
     -webkit-tap-highlight-color: transparent;
+    font-optical-sizing: auto;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+  a,
+  button {
+    touch-action: manipulation;
   }
   ::selection {
     background: var(--brand);
@@ -131,26 +145,117 @@
   .container-page {
     @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
   }
+  /*
+   * Tracking is size-specific: tighter as type grows, near zero at card size.
+   * Leading runs the other way: tight on display, looser on smaller headings.
+   */
   .display {
     font-weight: 500;
-    letter-spacing: -0.04em;
-    line-height: 1;
+    letter-spacing: -0.032em;
+    line-height: 1.04;
+  }
+  @media (min-width: 1024px) {
+    .display {
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
   }
   .heading {
     font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 1.1;
   }
+  .heading-sm {
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+  }
   .btn {
-    @apply inline-flex h-11 items-center justify-center gap-2 rounded-xs px-4 text-sm whitespace-nowrap;
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-xs px-4 text-sm whitespace-nowrap select-none;
     transition:
       background-color 160ms var(--ease-out-quint),
       color 160ms var(--ease-out-quint),
       border-color 160ms var(--ease-out-quint),
       transform 160ms var(--ease-out-quint);
   }
+  /* Feedback lands on press, faster than the release. */
   .btn:active {
     transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+
+  /*
+   * Translucent chrome: content scrolls underneath instead of behind an
+   * opaque strip. Falls back to solid when the user asks for less
+   * transparency or more contrast.
+   */
+  .material {
+    background: color-mix(in oklab, var(--canvas) 72%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+  }
+  /* Bigger surface, thicker material: heavier blur and deeper shadow. */
+  .material-thick {
+    background-color: color-mix(in oklab, var(--canvas) 86%, transparent) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(160%);
+    backdrop-filter: blur(32px) saturate(160%);
+    box-shadow:
+      inset 1px 0 0 rgb(255 255 255 / 0.06),
+      -24px 0 64px -16px rgb(0 0 0 / 0.55) !important;
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .material,
+    .material-thick {
+      background-color: var(--canvas) !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  /* Reduced motion: the sheet cross-fades in place instead of sliding. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot="sheet-content"] {
+      --tw-enter-translate-x: 0 !important;
+      --tw-exit-translate-x: 0 !important;
+      --tw-enter-translate-y: 0 !important;
+      --tw-exit-translate-y: 0 !important;
+    }
+  }
+
+  /* Scroll edge: a hairline that only appears once content slides under the bar. */
+  .scroll-edge {
+    position: relative;
+  }
+  .scroll-edge::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--stroke) 12%, var(--stroke) 88%, transparent);
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out-quint);
+  }
+  .scroll-edge[data-scrolled="true"]::after {
+    opacity: 1;
+  }
+  @media (prefers-contrast: more) {
+    .material {
+      background: var(--canvas);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .scroll-edge::after {
+      opacity: 1;
+      background: var(--soft);
+    }
+  }
+
+  /* Raised surface: a bright top edge where light catches it, soft depth below. */
+  .surface-raised {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 1px 2px rgb(0 0 0 / 0.25),
+      0 16px 40px -24px rgb(0 0 0 / 0.6);
   }
   .btn-light {
     @apply bg-chalk font-medium text-navy;

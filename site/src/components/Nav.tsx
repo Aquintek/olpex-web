@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Logo } from "./Logo";
@@ -8,12 +8,21 @@ import { NAV_LINKS } from "@/lib/content";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // The hairline under the bar only shows once content is actually underneath it.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-stroke/60 bg-canvas">
-      <nav className="container-page flex h-16 items-center justify-between" aria-label="Principal">
+    <header data-scrolled={scrolled} className="material scroll-edge sticky top-0 z-40">
+      <nav className="container-page flex h-[72px] items-center justify-between" aria-label="Principal">
         <a href="#inicio" aria-label="OLPEX Engineering Solutions, ir al inicio">
-          <Logo />
+          <Logo className="h-14" priority />
         </a>
 
         <ul className="hidden items-center gap-8 md:flex">
@@ -35,21 +44,21 @@ export function Nav() {
           </a>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
-              className="inline-flex size-10 items-center justify-center rounded-xs border border-stroke text-ink md:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-xs border border-stroke text-ink transition-transform duration-100 ease-(--ease-out-quint) active:scale-[0.97] md:hidden"
               aria-label="Abrir menú"
             >
               <Menu className="size-5" />
             </SheetTrigger>
-            <SheetContent side="right" className="w-[85vw] max-w-sm border-stroke bg-canvas p-6 text-ink">
+            <SheetContent side="right" className="material-thick w-[85vw] max-w-sm border-stroke p-6 text-ink">
               <SheetTitle className="sr-only">Menú</SheetTitle>
-              <Logo />
-              <ul className="mt-10 flex flex-col">
+              <Logo className="h-16" />
+              <ul className="mt-8 flex flex-col">
                 {NAV_LINKS.map((link) => (
                   <li key={link.href} className="border-b border-stroke">
                     <a
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="block py-4 text-2xl tracking-[-0.02em]"
+                      className="block py-4 text-2xl tracking-[-0.02em] transition-colors duration-100 active:text-brand-2"
                     >
                       {link.label}
                     </a>

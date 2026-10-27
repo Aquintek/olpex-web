@@ -25,7 +25,7 @@ export function Contact() {
         </div>
       </div>
 
-      <div className="rounded-md bg-chalk p-6 text-navy sm:p-8">
+      <div className="rounded-md bg-chalk p-6 text-navy shadow-[0_1px_2px_rgb(0_0_0/0.3),0_24px_56px_-28px_rgb(0_0_0/0.7)] sm:p-8">
         <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-[#3f5674]">
           <span className="status-dot" />
           Solicitar cotización

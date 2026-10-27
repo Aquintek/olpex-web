@@ -19,7 +19,7 @@ export function Supply() {
             Escribir a compras@olpex.net
           </a>
         </div>
-        <div className="relative aspect-[16/10] overflow-hidden rounded-md border border-stroke">
+        <div className="surface-raised relative aspect-[16/10] overflow-hidden rounded-md border border-stroke">
           <Image
             src="/fotos/point-io-ab.webp"
             alt="Módulos de entradas y salidas Allen-Bradley Point I/O en un tablero"

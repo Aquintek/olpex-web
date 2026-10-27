@@ -13,7 +13,7 @@ export function Services() {
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s, n) => (
-          <article key={s.id} id={s.id} className="flex flex-col overflow-hidden rounded-md border border-stroke">
+          <article key={s.id} id={s.id} className="surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface/30">
             <div className="relative aspect-[4/3] overflow-hidden bg-surface">
               <Image
                 src={s.photo}
@@ -26,7 +26,7 @@ export function Services() {
             </div>
             <div className="flex flex-1 flex-col p-6">
               <p className="eyebrow">0{n + 1}</p>
-              <h3 className="heading mt-3 text-2xl">{s.title}</h3>
+              <h3 className="heading-sm mt-3 text-2xl">{s.title}</h3>
               <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-mute">
                 {s.items.map((item) => (
                   <li key={item} className="flex gap-3">
@@ -47,7 +47,7 @@ export function Services() {
 
 function Thermography() {
   return (
-    <article className="flex flex-col overflow-hidden rounded-md border border-stroke bg-surface">
+    <article className="surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface">
       <div className="grid aspect-[4/3] grid-cols-2 gap-px bg-stroke">
         {[1, 2].map((n) => (
           <div key={n} className="relative overflow-hidden">
@@ -66,7 +66,7 @@ function Thermography() {
           <span className="status-dot" />
           En campo
         </p>
-        <h3 className="heading mt-3 text-2xl">Estudios de termografía</h3>
+        <h3 className="heading-sm mt-3 text-2xl">Estudios de termografía</h3>
         <p className="mt-5 text-sm leading-relaxed text-mute">
           Detectamos puntos calientes en barras, breakers y conexiones antes de que se conviertan en un
           paro de línea. Entregamos el reporte con lecturas, hallazgos y prioridad de corrección.

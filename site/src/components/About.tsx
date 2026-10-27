@@ -6,7 +6,7 @@ const VALUES = ["Seguridad", "Costos transparentes", "Estándares de calidad"];
 export function About() {
   return (
     <section id="nosotros" className="container-page grid items-center gap-12 py-24 md:grid-cols-[1fr_1.15fr] md:py-32">
-      <div className="relative order-last aspect-[4/5] overflow-hidden rounded-md border border-stroke md:order-first">
+      <div className="surface-raised relative order-last aspect-[4/5] overflow-hidden rounded-md border border-stroke md:order-first">
         <Image
           src="/fotos/instalaciones-electricas.webp"
           alt="Instalación eléctrica y de ductos terminada en una planta industrial"
