@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Next.js build output (inside site/)
+.next/
+out/
+next-env.d.ts
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+*.swp
+
+# Vercel
+.vercel/
+
+# Debug
+npm-debug.log*
+
+# Playwright / QA screenshots
+playwright-cli-screenshots/
+.playwright-cli/
+qa-screenshots/
+
+# Written by the improve-animations / prototype skills
+plans/
+prototypes/
+
+# Python bytecode from bundled skills
+__pycache__/
+*.pyc
