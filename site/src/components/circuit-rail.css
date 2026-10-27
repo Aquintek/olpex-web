@@ -1,0 +1,90 @@
+/*
+ * Ladder-diagram rail. Fill is scroll-linked (no transition: it tracks the
+ * scroll 1:1); rungs and stops ease in when the fill reaches them.
+ */
+.circuit-rail {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .circuit-rail {
+    display: block;
+    position: absolute;
+    left: calc(50% - 620px);
+    width: 2px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out-quint);
+  }
+  .circuit-rail[data-ready="true"] {
+    opacity: 1;
+  }
+}
+
+.circuit-rail__track,
+.circuit-rail__lit {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+}
+
+.circuit-rail__track {
+  background: var(--stroke);
+}
+
+.circuit-rail__lit {
+  background: var(--brand);
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+  will-change: transform;
+}
+
+/* Stop: a contact on the rail. Its ::after is the rung into the section. */
+.circuit-rail__stop {
+  position: absolute;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border: 2px solid var(--stroke);
+  border-radius: 9999px;
+  background: var(--canvas);
+  transition:
+    background-color 200ms var(--ease-out-quint),
+    border-color 200ms var(--ease-out-quint);
+}
+
+.circuit-rail__stop::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  width: var(--rung);
+  height: 2px;
+  background: var(--brand);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 450ms var(--ease-out-quint);
+}
+
+.circuit-rail__stop[data-lit="true"] {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+.circuit-rail__stop[data-lit="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Reduced motion: the rail stays scroll-linked, but rungs switch without sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .circuit-rail__stop::after {
+    transform: none;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+  .circuit-rail__stop[data-lit="true"]::after {
+    opacity: 1;
+  }
+}

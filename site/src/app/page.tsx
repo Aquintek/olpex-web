@@ -7,12 +7,14 @@ import { About } from "@/components/About";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { CircuitRail } from "@/components/CircuitRail";
 
 export default function Home() {
   return (
     <>
       <Nav />
-      <main>
+      <main className="relative">
+        <CircuitRail />
         <Hero />
         <Pillars />
         <Services />

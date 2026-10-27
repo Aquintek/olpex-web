@@ -1,0 +1,37 @@
+/*
+ * HMI-style readouts. Each cell has a status LED that switches on in sequence
+ * when the panel scrolls into view, and the value settles in after it.
+ */
+.readout-led {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px rgb(21 151 196 / 0.18);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .readouts .readout-led {
+    transition:
+      background-color 200ms var(--ease-out-quint),
+      box-shadow 200ms var(--ease-out-quint);
+    transition-delay: calc(var(--i) * 120ms);
+  }
+  .readouts[data-online="false"] .readout-led {
+    background: var(--stroke);
+    box-shadow: 0 0 0 3px transparent;
+  }
+
+  .readouts .readout-value {
+    transition:
+      opacity 500ms var(--ease-out-quint),
+      transform 500ms var(--ease-out-quint);
+    transition-delay: calc(var(--i) * 120ms + 80ms);
+  }
+  .readouts[data-online="false"] .readout-value {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

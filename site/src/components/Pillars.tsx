@@ -1,18 +1,89 @@
+"use client";
+
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { PILLARS } from "@/lib/content";
+import "./pillars.css";
+
+const i = (n: number) => ({ "--i": n }) as CSSProperties;
 
 export function Pillars() {
+  const ref = useRef<HTMLElement>(null);
+  const [online, setOnline] = useState(false);
+
+  // The panel "powers on" the first time it scrolls into view.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setOnline(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section aria-label="Por qué OLPEX" className="border-y border-stroke">
+    <section ref={ref} aria-label="Por qué OLPEX" data-online={online} className="readouts border-y border-stroke">
       {/* 1px gaps over the stroke color draw the hairline dividers at every breakpoint. */}
       <div className="mx-auto grid max-w-[1200px] gap-px bg-stroke sm:grid-cols-2 lg:grid-cols-4">
-        {PILLARS.map((p) => (
-          <div key={p.label} className="bg-canvas px-4 py-10 sm:px-6 lg:px-8">
-            <p className="eyebrow">{p.label}</p>
-            <p className="heading mt-4 text-[32px] text-ink">{p.value}</p>
+        {PILLARS.map((p, n) => (
+          <div key={p.label} className="readout bg-canvas px-4 py-10 sm:px-6 lg:px-8" style={i(n)}>
+            <div className="flex items-center justify-between gap-4">
+              <p className="eyebrow flex items-center gap-2">
+                <span className="readout-led" aria-hidden="true" />
+                {p.label}
+              </p>
+              <span className="font-mono text-[11px] tracking-[0.08em] text-mute tabular-nums" aria-hidden="true">
+                SYS.{String(n + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <p className="readout-value heading mt-4 text-[32px] text-ink tabular-nums">
+              <Counter value={p.value} run={online} delay={n * 120} />
+            </p>
             <p className="mt-3 text-sm leading-relaxed text-mute">{p.text}</p>
           </div>
         ))}
       </div>
     </section>
+  );
+}
+
+// Counts the numeric part of a value ("+10 años") up from zero, like an instrument settling.
+function Counter({ value, run, delay }: { value: string; run: boolean; delay: number }) {
+  const match = value.match(/^(\D*)(\d+)(.*)$/);
+  const target = match ? Number(match[2]) : 0;
+  const [shown, setShown] = useState(target);
+
+  useEffect(() => {
+    if (!match || !run) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    const duration = 900;
+    const start = performance.now() + delay;
+    const tick = (now: number) => {
+      const t = Math.min(Math.max((now - start) / duration, 0), 1);
+      setShown(Math.round(target * (1 - Math.pow(1 - t, 4))));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [run]);
+
+  if (!match) return <>{value}</>;
+  return (
+    <>
+      <span className="sr-only">{value}</span>
+      <span aria-hidden="true">
+        {match[1]}
+        {shown}
+        {match[3]}
+      </span>
+    </>
   );
 }

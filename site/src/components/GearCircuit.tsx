@@ -22,6 +22,13 @@ export function GearCircuit({ className }: { className?: string }) {
   return (
     <nav aria-label="Áreas de servicio" className={className}>
       <svg className="gear-circuit" viewBox="16 30 764 500">
+        {/* Drafting marks: center lines through the gear and the ring's diameter. */}
+        <g className="annot" fill="none" aria-hidden="true">
+          <path className="annot-center" d="M200 92V468M18 280H64M182 280H218" />
+          <path d="M30 300V490M370 455V490M30 482H370M30 476V488M370 476V488" />
+          <text x="200" y="508" textAnchor="middle">Ø 340</text>
+        </g>
+
         <g fill="none" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path className="ln ln-ring" pathLength={1} d={RING} />
           <path className="ln ln-gear" pathLength={1} d={GEAR} />
@@ -29,15 +36,11 @@ export function GearCircuit({ className }: { className?: string }) {
         </g>
         {AREAS.map((a, n) => (
           <a key={a.href} href={a.href} className="area" style={i(n)}>
-            <path
-              className="ln ln-trace"
-              pathLength={1}
-              d={a.d}
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            />
+            <g fill="none" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path className="ln ln-trace" pathLength={1} d={a.d} />
+              {/* A short bright segment that travels the trace, like a signal. */}
+              <path className="pulse" pathLength={1} d={a.d} />
+            </g>
             {/* Invisible hit area so the whole row is tappable, not just the text. */}
             <rect className="hit" x="455" y={a.y - 40} width="325" height="80" />
             <g className="node">
