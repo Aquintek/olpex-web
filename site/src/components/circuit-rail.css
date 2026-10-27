@@ -20,6 +20,24 @@
   .circuit-rail[data-ready="true"] {
     opacity: 1;
   }
+  /* Break over the client logos; the trace fades out and back in around them. */
+  .circuit-rail[data-gap] .circuit-rail__track,
+  .circuit-rail[data-gap] .circuit-rail__lit {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 calc(var(--gap-a) - 16px),
+      transparent var(--gap-a),
+      transparent var(--gap-b),
+      #000 calc(var(--gap-b) + 16px)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 calc(var(--gap-a) - 16px),
+      transparent var(--gap-a),
+      transparent var(--gap-b),
+      #000 calc(var(--gap-b) + 16px)
+    );
+  }
 }
 
 .circuit-rail__track,
@@ -35,9 +53,8 @@
 
 .circuit-rail__lit {
   background: var(--brand);
-  transform-origin: top;
-  transform: scaleY(var(--p, 0));
-  will-change: transform;
+  /* clip-path, not scaleY, so the logo-gap mask stays put while the fill grows. */
+  clip-path: inset(0 0 calc((1 - var(--p, 0)) * 100%) 0);
 }
 
 /* Stop: a contact on the rail. Its ::after is the rung into the section. */

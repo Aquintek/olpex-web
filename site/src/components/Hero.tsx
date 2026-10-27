@@ -29,19 +29,13 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Drawing sheet: corner marks and captions frame the diagram like a technical figure. */}
+        {/* Drawing sheet: corner marks frame the diagram like a technical figure. */}
         <div className="blueprint-frame">
           <span className="bp-corner bp-tl" aria-hidden="true" />
           <span className="bp-corner bp-tr" aria-hidden="true" />
           <span className="bp-corner bp-bl" aria-hidden="true" />
           <span className="bp-corner bp-br" aria-hidden="true" />
-          <p className="bp-caption bp-caption-top" aria-hidden="true">
-            Fig. 01 · Áreas de servicio
-          </p>
           <GearCircuit />
-          <p className="bp-caption bp-caption-bottom" aria-hidden="true">
-            14.6349° N · 90.5069° O
-          </p>
         </div>
       </div>
     </section>

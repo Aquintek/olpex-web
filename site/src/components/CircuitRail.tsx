@@ -4,7 +4,10 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "./circuit-rail.css";
 
 type Stop = { y: number; rung: number };
-type Geometry = { top: number; height: number; stops: Stop[] };
+type Geometry = { top: number; height: number; stops: Stop[]; gap: [number, number] | null };
+
+// Clearance kept between the rail and the moving client logos.
+const GAP_PAD = 24;
 
 /*
  * A vertical trace in the left gutter that links every section header, like the
@@ -26,7 +29,7 @@ export function CircuitRail() {
       const mainTop = main.getBoundingClientRect().top;
       const railLeft = rail.getBoundingClientRect().left;
       const dots = Array.from(main.querySelectorAll("section"))
-        .map((s) => s.querySelector<HTMLElement>(".eyebrow .status-dot"))
+        .map((s) => s.querySelector<HTMLElement>(".section-label .status-dot, .eyebrow .status-dot"))
         .filter((d): d is HTMLElement => d !== null);
       if (dots.length < 2) return;
 
@@ -35,11 +38,16 @@ export function CircuitRail() {
         return { y: r.top + r.height / 2 - mainTop, x: r.left - railLeft };
       });
       const top = points[0].y;
+      // The rail breaks where the full-width logo marquee runs, so it never crosses the logos.
+      const marquee = main.querySelector<HTMLElement>(".client-marquee")?.getBoundingClientRect();
       setGeo({
         top,
         height: points[points.length - 1].y - top,
         // Only headers in the left column get a rung; others would cross content.
         stops: points.map((p) => ({ y: p.y - top, rung: p.x < 160 ? Math.max(p.x - 6, 0) : 0 })),
+        gap: marquee
+          ? [marquee.top - mainTop - top - GAP_PAD, marquee.bottom - mainTop - top + GAP_PAD]
+          : null,
       });
     };
 
@@ -86,7 +94,17 @@ export function CircuitRail() {
       className="circuit-rail"
       aria-hidden="true"
       data-ready={geo !== null}
-      style={geo ? { top: geo.top, height: geo.height } : undefined}
+      data-gap={geo?.gap ? true : undefined}
+      style={
+        geo
+          ? ({
+              top: geo.top,
+              height: geo.height,
+              "--gap-a": `${geo.gap?.[0] ?? 0}px`,
+              "--gap-b": `${geo.gap?.[1] ?? 0}px`,
+            } as CSSProperties)
+          : undefined
+      }
     >
       <span className="circuit-rail__track" />
       <span className="circuit-rail__lit" />
