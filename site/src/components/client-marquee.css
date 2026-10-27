@@ -1,0 +1,31 @@
+/*
+ * Client logos scroll right-to-left forever. By request it never pauses:
+ * no hover pause, no pause control, no reduced-motion stop.
+ */
+.client-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.client-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: client-marquee 55s linear infinite;
+}
+
+/* Each copy carries its own trailing gap so -50% lands exactly on the seam. */
+.client-marquee__list {
+  display: flex;
+  gap: 24px;
+  padding-right: 24px;
+}
+
+@keyframes client-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
