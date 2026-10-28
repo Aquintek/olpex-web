@@ -44,12 +44,6 @@ export function Footer() {
         <span>© {new Date().getFullYear()} OLPEX Engineering Solutions</span>
         <span>Guatemala</span>
       </div>
-      <p className="container-page pb-8 text-center text-sm text-muted-foreground">
-        Built with Claude Web Builder by{" "}
-        <a href="https://tododeia.com" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-chalk">
-          Tododeia
-        </a>
-      </p>
     </footer>
   );
 }
