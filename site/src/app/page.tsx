@@ -8,6 +8,7 @@ import { ClientMarquee } from "@/components/ClientMarquee";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { CircuitRail } from "@/components/CircuitRail";
+import { RevealObserver } from "@/components/RevealObserver";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Nav />
       <main className="relative">
         <CircuitRail />
+        <RevealObserver />
         <Hero />
         <Pillars />
         <Services />

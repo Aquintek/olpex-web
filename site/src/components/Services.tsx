@@ -14,8 +14,13 @@ export function Services() {
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s, n) => (
-          <article key={s.id} id={s.id} className="surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface/30 transition-[border-color] duration-500 ease-(--ease-out-quint) target:border-brand-2">
-            <div className="relative aspect-[4/3] overflow-hidden bg-surface">
+          <article
+            key={s.id}
+            id={s.id}
+            data-reveal
+            className="card-reveal surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface/30 target:border-brand-2"
+          >
+            <div className="scan relative aspect-[4/3] overflow-hidden bg-surface">
               <Image
                 src={asset(s.photo)}
                 alt={s.alt}
@@ -48,10 +53,10 @@ export function Services() {
 
 function Thermography() {
   return (
-    <article className="surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface">
+    <article data-reveal className="card-reveal surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface">
       <div className="grid aspect-[4/3] grid-cols-2 gap-px bg-stroke">
         {[1, 2].map((n) => (
-          <div key={n} className="relative overflow-hidden">
+          <div key={n} className="scan relative overflow-hidden">
             <Image
               src={asset(`/fotos/termografia-${n}.webp`)}
               alt={`Imagen termográfica de un tablero eléctrico, lectura ${n}`}

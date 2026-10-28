@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { EMAILS, PHONES, QUOTE_MAILTO, WHATSAPP_URL } from "@/lib/content";
 import { SectionHeader } from "./SectionHeader";
@@ -11,7 +12,7 @@ export function Contact() {
           title="Hablemos de su próximo proyecto"
           text="Para requerimientos generales puede llamarnos o escribirnos. Le respondemos con una propuesta técnica y un costo claro."
         />
-        <div className="mt-10">
+        <div className="mt-10" data-reveal style={{ "--d": "180ms" } as CSSProperties}>
           <p className="eyebrow">Teléfonos</p>
           <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
             {PHONES.map((p) => (
@@ -25,7 +26,11 @@ export function Contact() {
         </div>
       </div>
 
-      <div className="rounded-md bg-chalk p-6 text-navy shadow-[0_1px_2px_rgb(0_0_0/0.3),0_24px_56px_-28px_rgb(0_0_0/0.7)] sm:p-8">
+      <div
+        className="rounded-md bg-chalk p-6 text-navy shadow-[0_1px_2px_rgb(0_0_0/0.3),0_24px_56px_-28px_rgb(0_0_0/0.7)] sm:p-8"
+        data-reveal
+        style={{ "--d": "120ms" } as CSSProperties}
+      >
         <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-[#3f5674]">
           <span className="status-dot" />
           Solicitar cotización

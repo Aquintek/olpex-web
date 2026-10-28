@@ -24,29 +24,41 @@ export function CircuitRail() {
     const main = rail?.parentElement;
     if (!rail || !main) return;
 
+    // Layout position inside <main>. Offsets ignore transforms, so headers that are
+    // still shifted down by their scroll reveal measure where they will settle.
+    const offsetIn = (el: HTMLElement) => {
+      let x = 0;
+      let y = 0;
+      for (let n: HTMLElement | null = el; n && n !== main; n = n.offsetParent as HTMLElement | null) {
+        x += n.offsetLeft;
+        y += n.offsetTop;
+      }
+      return { x, y };
+    };
+
     const measure = () => {
       if (getComputedStyle(rail).display === "none") return;
-      const mainTop = main.getBoundingClientRect().top;
-      const railLeft = rail.getBoundingClientRect().left;
+      const railLeft = rail.offsetLeft;
       const dots = Array.from(main.querySelectorAll("section"))
         .map((s) => s.querySelector<HTMLElement>(".section-label .status-dot, .eyebrow .status-dot"))
         .filter((d): d is HTMLElement => d !== null);
       if (dots.length < 2) return;
 
       const points = dots.map((d) => {
-        const r = d.getBoundingClientRect();
-        return { y: r.top + r.height / 2 - mainTop, x: r.left - railLeft };
+        const o = offsetIn(d);
+        return { y: o.y + d.offsetHeight / 2, x: o.x - railLeft };
       });
       const top = points[0].y;
       // The rail breaks where the full-width logo marquee runs, so it never crosses the logos.
-      const marquee = main.querySelector<HTMLElement>(".client-marquee")?.getBoundingClientRect();
+      const marquee = main.querySelector<HTMLElement>(".client-marquee");
+      const mq = marquee ? offsetIn(marquee).y : 0;
       setGeo({
         top,
         height: points[points.length - 1].y - top,
         // Only headers in the left column get a rung; others would cross content.
         stops: points.map((p) => ({ y: p.y - top, rung: p.x < 160 ? Math.max(p.x - 6, 0) : 0 })),
         gap: marquee
-          ? [marquee.top - mainTop - top - GAP_PAD, marquee.bottom - mainTop - top + GAP_PAD]
+          ? [mq - top - GAP_PAD, mq + marquee.offsetHeight - top + GAP_PAD]
           : null,
       });
     };

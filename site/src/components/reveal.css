@@ -1,0 +1,179 @@
+/*
+ * Scroll reveals. Marketing surface, seen once per visit, so these may run
+ * 600–800ms. Hidden states apply only once html[data-js] is set (inline script
+ * in layout), so without JavaScript every element is simply visible.
+ *
+ * Unlayered on purpose: it must win over Tailwind transition utilities on the
+ * same elements, which is why the card rule restates border-color.
+ */
+
+/* A. Section copy: rises 12px into place, staggered by --d (set inline, 60ms steps). */
+[data-reveal] {
+  transition:
+    opacity 600ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+  transition-delay: var(--d, 0ms);
+}
+
+html[data-js] [data-reveal]:not([data-visible]) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/*
+ * C. Service cards switch on in reading order. Delay follows the column so each
+ * row runs left to right as it arrives; the top edge then draws like a trace.
+ */
+.card-reveal {
+  --d: 0ms;
+  position: relative;
+  transition:
+    opacity 600ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint),
+    border-color 500ms var(--ease-out-quint);
+  transition-delay: var(--d), var(--d), 0ms;
+}
+
+html[data-js] .card-reveal:not([data-visible]) {
+  transform: translateY(16px);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .card-reveal:nth-child(2n) {
+    --d: 80ms;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-reveal:nth-child(3n + 2) {
+    --d: 80ms;
+  }
+  .card-reveal:nth-child(3n) {
+    --d: 160ms;
+  }
+}
+
+.card-reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: 2px;
+  background: var(--brand);
+  transform-origin: left;
+  transition: transform 700ms var(--ease-out-quint);
+  transition-delay: calc(var(--d) + 200ms);
+}
+
+html[data-js] .card-reveal:not([data-visible])::before {
+  transform: scaleX(0);
+}
+
+/*
+ * B. Photo scan: the image is uncovered top to bottom while a thin blue line
+ * rides the edge, like an inspection scan. clip-path and the line share one
+ * curve and duration so the line stays exactly on the reveal edge.
+ */
+.scan {
+  --scan-d: 0ms;
+}
+
+html[data-js] .scan {
+  clip-path: inset(0 0 100% 0);
+}
+
+/* A standalone scan only uses [data-reveal] as its trigger: no fade, no rise. */
+html[data-js] .scan[data-reveal]:not([data-visible]) {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-js] .scan[data-visible],
+html[data-js] [data-visible] .scan {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 800ms var(--ease-in-out-strong) var(--scan-d);
+}
+
+/* Inside a card, the scan starts once the card has begun to settle. */
+.card-reveal .scan {
+  --scan-d: calc(var(--d) + 150ms);
+}
+.card-reveal .scan + .scan {
+  --scan-d: calc(var(--d) + 230ms);
+}
+
+.scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 70%,
+    rgb(79 168 255 / 0.16) calc(100% - 2px),
+    var(--brand-2) calc(100% - 2px)
+  );
+  opacity: 0;
+}
+
+html[data-js] .scan[data-visible]::after,
+html[data-js] [data-visible] .scan::after {
+  animation:
+    scan-line 800ms var(--ease-in-out-strong) var(--scan-d) both,
+    scan-line-out 300ms var(--ease-out-quint) calc(var(--scan-d) + 800ms) forwards;
+}
+
+@keyframes scan-line {
+  from {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scan-line-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: keep the fades, drop every movement, wipe and scan line. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .card-reveal {
+    transition:
+      opacity 300ms ease-out,
+      border-color 300ms ease-out;
+    transition-delay: 0ms;
+  }
+  html[data-js] [data-reveal]:not([data-visible]) {
+    transform: none;
+  }
+  html[data-js] .scan {
+    clip-path: none;
+  }
+  html[data-js] .scan[data-visible]::after,
+  html[data-js] [data-visible] .scan::after {
+    animation: none;
+  }
+  .card-reveal::before {
+    transition: none;
+  }
+  html[data-js] .card-reveal:not([data-visible])::before {
+    transform: none;
+  }
+}
+
+@media print {
+  html[data-js] [data-reveal]:not([data-visible]) {
+    opacity: 1;
+    transform: none;
+  }
+  html[data-js] .scan {
+    clip-path: none;
+  }
+}
