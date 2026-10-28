@@ -21,7 +21,7 @@ const AREAS = [
 export function GearCircuit({ className }: { className?: string }) {
   return (
     <nav aria-label="Áreas de servicio" className={className}>
-      <svg className="gear-circuit" viewBox="16 30 764 500">
+      <svg className="gear-circuit" viewBox="16 30 764 500" data-pause-offscreen>
         {/* Drafting marks: center lines through the gear and the ring's diameter. */}
         <g className="annot" fill="none" aria-hidden="true">
           <path className="annot-center" d="M200 92V468M18 280H64M182 280H218" />

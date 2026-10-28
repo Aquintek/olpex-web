@@ -170,6 +170,11 @@
     animation: gc-pulse 9.6s linear calc(2.6s + var(--i) * 1.6s) infinite;
   }
 
+  /* Off screen, the looping pulses stop repainting the SVG. */
+  .gear-circuit[data-offscreen] .pulse {
+    animation-play-state: paused;
+  }
+
   /* Hover and focus send current straight to the chosen service. */
   .gear-circuit .area:focus-visible .pulse {
     animation: gc-pulse-now 0.9s linear infinite;

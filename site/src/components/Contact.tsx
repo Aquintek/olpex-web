@@ -25,13 +25,12 @@ export function Contact() {
           data-reveal
           style={{ "--d": "120ms" } as CSSProperties}
         >
-          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-[#3f5674]">
-            <span className="status-dot" />
-            Solicitar cotización
+          <h3 className="heading text-[26px] sm:text-[30px]">Solicite una cotización</h3>
+          <p className="mt-2 text-base text-paper-ink">
+            Cuéntenos qué necesita su planta y le respondemos con una propuesta técnica.
           </p>
-          <h3 className="heading mt-3 text-[26px] sm:text-[30px]">Cuéntenos qué necesita su planta</h3>
           <ContactForm />
-          <p className="mt-2 border-t border-[#d5e1ee] pt-4 text-sm text-[#3f5674]">
+          <p className="mt-2 border-t border-paper-line pt-4 text-sm text-paper-ink">
             ¿Prefiere hablar directo?{" "}
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-navy underline underline-offset-2">
               Escríbanos por WhatsApp
@@ -44,10 +43,14 @@ export function Contact() {
       <div className="mt-16 grid gap-8 border-t border-stroke pt-10 sm:grid-cols-2" data-reveal>
         <div>
           <p className="eyebrow">Teléfonos</p>
-          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+          {/* Links are 44px tall so a thumb lands on the right number. */}
+          <ul className="mt-2 flex flex-wrap gap-x-6">
             {PHONES.map((p) => (
               <li key={p.tel}>
-                <a href={`tel:${p.tel}`} className="text-base tabular-nums text-ink transition-colors duration-150 hover:text-brand-2">
+                <a
+                  href={`tel:${p.tel}`}
+                  className="inline-flex min-h-11 items-center text-base tabular-nums text-ink transition-colors duration-150 hover:text-brand-2"
+                >
                   {p.display}
                 </a>
               </li>
@@ -56,10 +59,13 @@ export function Contact() {
         </div>
         <div>
           <p className="eyebrow">Correos</p>
-          <ul className="mt-4 flex flex-col gap-2">
+          <ul className="mt-2 flex flex-col">
             {EMAILS.map((e) => (
-              <li key={e.address} className="flex flex-wrap items-baseline gap-x-3">
-                <a href={`mailto:${e.address}`} className="text-base text-ink transition-colors duration-150 hover:text-brand-2">
+              <li key={e.address} className="flex flex-wrap items-center gap-x-3">
+                <a
+                  href={`mailto:${e.address}`}
+                  className="inline-flex min-h-11 items-center text-base text-ink transition-colors duration-150 hover:text-brand-2"
+                >
                   {e.address}
                 </a>
                 <span className="text-sm text-mute">{e.label}</span>

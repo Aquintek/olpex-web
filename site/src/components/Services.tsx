@@ -8,7 +8,7 @@ export function Services() {
     <section id="servicios" className="container-page py-24 md:py-32">
       <SectionHeader
         eyebrow="Servicios"
-        title="Cinco disciplinas, un mismo responsable"
+        title="Toda la planta, un mismo responsable"
         text="Atendemos la planta completa: desde el tablero eléctrico hasta el transportador, el aire comprimido y el PLC que los coordina."
       />
 

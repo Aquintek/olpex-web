@@ -1,13 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo, Geist_Mono } from "next/font/google";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { asset } from "@/lib/asset";
 import { EMAILS, PHONES } from "@/lib/content";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Archivo: a grotesque with 19th-century industrial roots and real width/weight
+// range, so headings and labels carry an engineering voice. Geist Mono stays for
+// data and measurements only (phones, drawing dimensions, nav).
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -57,12 +61,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${archivo.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
-        {/* Marks JS as available before first paint, so scroll reveals can hide content without a flash. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js=''" }} />
+        {/*
+         * Marks JS as available before first paint, so scroll reveals can hide content
+         * without a flash. If the app never boots (bundle blocked or failed), the mark is
+         * removed after 3s and every section shows as plain static content.
+         */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var d=document.documentElement;d.dataset.js='';setTimeout(function(){if(!('revealReady' in d.dataset))delete d.dataset.js},3000)",
+          }}
+        />
       </head>
       <body className="min-h-full">
         {children}

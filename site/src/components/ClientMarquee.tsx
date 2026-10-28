@@ -6,7 +6,10 @@ import "./client-marquee.css";
 
 function LogoList({ hidden }: { hidden?: boolean }) {
   return (
-    <ul className="client-marquee__list" aria-hidden={hidden || undefined}>
+    <ul
+      className={hidden ? "client-marquee__list client-marquee__list--copy" : "client-marquee__list"}
+      aria-hidden={hidden || undefined}
+    >
       {CLIENTS.map((c) => (
         <li
           key={c.name}
@@ -32,7 +35,7 @@ export function ClientMarquee() {
         <SectionHeader id="clientes" eyebrow="Clientes" title="Algunos de nuestros clientes" />
       </div>
       <div className="client-marquee mt-12">
-        <div className="client-marquee__track">
+        <div className="client-marquee__track" data-pause-offscreen>
           <LogoList />
           <LogoList hidden />
         </div>

@@ -44,6 +44,12 @@ export function Footer() {
         <span>© {new Date().getFullYear()} OLPEX Engineering Solutions</span>
         <span>Guatemala</span>
       </div>
+      <p className="container-page pb-8 text-center text-sm text-muted-foreground">
+        Built with Claude Web Builder by{" "}
+        <a href="https://tododeia.com" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-chalk">
+          Tododeia
+        </a>
+      </p>
     </footer>
   );
 }
@@ -52,7 +58,7 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
   return (
     <div>
       <p className="eyebrow text-ink">{title}</p>
-      <ul className="mt-5 space-y-3 text-sm text-mute [&_a]:transition-colors [&_a]:duration-150 [&_a:hover]:text-chalk">
+      <ul className="mt-4 space-y-1 text-sm text-mute [&_a]:inline-block [&_a]:py-1.5 [&_a]:transition-colors [&_a]:duration-150 [&_a:hover]:text-chalk">
         {children}
       </ul>
     </div>

@@ -13,7 +13,11 @@ export function Supply() {
        */}
       <div className="container-page flex flex-col gap-8 py-24 md:grid md:grid-cols-2 md:items-center md:gap-12 md:py-32">
         <div className="contents md:block">
-          <SectionHeader id="suministro-titulo" eyebrow="Excelentes tiempos de importación" title="Suministro de equipos" />
+          <SectionHeader
+            id="suministro-titulo"
+            eyebrow="Suministro"
+            title="Equipos con excelentes tiempos de importación"
+          />
           <ul
             className="order-3 divide-y divide-stroke border-y border-stroke md:mt-8"
             data-reveal

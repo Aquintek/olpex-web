@@ -19,10 +19,18 @@
   --color-brand-2: var(--brand-2);
   --color-chalk: var(--chalk);
   --color-navy: var(--navy);
+  --color-navy-hover: var(--navy-hover);
+  --color-paper-ink: var(--paper-ink);
+  --color-paper-mute: var(--paper-mute);
+  --color-paper-line: var(--paper-line);
+  --color-field-line: var(--field-line);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-whatsapp: var(--whatsapp);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-heading: var(--font-sans);
   --color-ring: var(--ring);
@@ -64,6 +72,20 @@
   --brand-2: #4fa8ff;
   --chalk: #fafcff;
   --navy: #061a33;
+  --chalk-hover: #dfeefa;
+  --surface-hover: #12325c;
+  --navy-hover: #0e2c52;
+
+  /* Ink on the chalk (light) contact card. All pass 4.5:1 on chalk except
+     --paper-line, which is a divider only. --field-line is 3.06:1 (WCAG 1.4.11). */
+  --paper-ink: #3f5674;
+  --paper-mute: #5a6f8a;
+  --paper-line: #d5e1ee;
+  --field-line: #7f93ad;
+  --danger: #b42318;
+  --success: #0f6b3a;
+  /* WhatsApp's own teal green: white icon on it is 4.1:1, the bright green was 2:1. */
+  --whatsapp: #128c7e;
 
   --background: var(--canvas);
   --foreground: var(--ink);
@@ -96,6 +118,11 @@
     @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 88px;
+    scrollbar-color: var(--stroke) var(--canvas);
+  }
+  input,
+  textarea {
+    caret-color: var(--brand);
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -143,10 +170,13 @@
   .status-dot {
     @apply inline-block size-1.5 shrink-0 rounded-full bg-brand;
   }
-  /* Section name: the point where the side trace connects, so it has to read as a label. */
+  /*
+   * Section name: the point where the side trace connects, so it has to read as a
+   * label. Set in the text face, not mono: mono is kept for data and measurements.
+   */
   .section-label {
-    @apply flex items-center gap-3 font-mono text-[15px] font-medium uppercase text-chalk sm:text-base;
-    letter-spacing: 0.1em;
+    @apply flex items-center gap-3 text-[15px] font-semibold uppercase text-chalk sm:text-base;
+    letter-spacing: 0.12em;
   }
   .section-label .status-dot {
     @apply size-2;
@@ -158,20 +188,21 @@
    * Tracking is size-specific: tighter as type grows, near zero at card size.
    * Leading runs the other way: tight on display, looser on smaller headings.
    */
+  /* Values tuned for Archivo, which sets wider than Geist: less negative tracking. */
   .display {
     font-weight: 500;
-    letter-spacing: -0.032em;
+    letter-spacing: -0.025em;
     line-height: 1.04;
   }
   @media (min-width: 1024px) {
     .display {
-      letter-spacing: -0.04em;
-      line-height: 1;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
     }
   }
   .heading {
     font-weight: 500;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     line-height: 1.1;
   }
   .heading-sm {
@@ -264,7 +295,7 @@
     @apply mb-1.5 block text-sm font-medium text-navy;
   }
   .form-input {
-    @apply block w-full rounded-xs border border-[#c4d3e4] bg-white px-3 text-base text-navy;
+    @apply block w-full rounded-xs border border-field-line bg-white px-3 text-base text-navy;
     min-height: 44px;
     padding-block: 10px;
     transition:
@@ -277,7 +308,7 @@
     box-shadow: 0 0 0 3px rgb(21 151 196 / 0.22);
   }
   .form-input[aria-invalid="true"] {
-    border-color: #b42318;
+    border-color: var(--danger);
   }
   .form-input[aria-invalid="true"]:focus {
     box-shadow: 0 0 0 3px rgb(180 35 24 / 0.18);
@@ -308,10 +339,10 @@
   }
   @media (hover: hover) and (pointer: fine) {
     .btn-light:hover {
-      background: #dfeefa;
+      background: var(--chalk-hover);
     }
     .btn-dark:hover {
-      background: #12325c;
+      background: var(--surface-hover);
     }
     .btn-ghost:hover {
       border-color: var(--soft);

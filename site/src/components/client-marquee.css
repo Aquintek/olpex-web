@@ -1,6 +1,8 @@
 /*
- * Client logos scroll right-to-left forever. By request it never pauses:
- * no hover pause, no pause control, no reduced-motion stop.
+ * Client logos scroll right-to-left. It pauses under a hovering mouse so a logo
+ * can be read, and while off screen to save work. With reduced motion it does
+ * not move at all: every logo is laid out in a static wrapped grid instead
+ * (WCAG 2.2.2, moving content must be stoppable).
  */
 .client-marquee {
   overflow: hidden;
@@ -12,6 +14,16 @@
   display: flex;
   width: max-content;
   animation: client-marquee 55s linear infinite;
+}
+
+.client-marquee__track[data-offscreen] {
+  animation-play-state: paused;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .client-marquee:hover .client-marquee__track {
+    animation-play-state: paused;
+  }
 }
 
 /* Each copy carries its own trailing gap so -50% lands exactly on the seam. */
@@ -27,5 +39,28 @@
   }
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .client-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  .client-marquee__track {
+    width: auto;
+    animation: none;
+  }
+  .client-marquee__list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding-right: 0;
+  }
+  .client-marquee__list--copy {
+    display: none;
   }
 }

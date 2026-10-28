@@ -126,19 +126,19 @@ export function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-3 sm:col-span-2">
-        <button type="submit" disabled={sending} className="btn h-12 w-full bg-navy text-chalk hover:bg-[#0e2c52] disabled:opacity-70">
+        <button type="submit" disabled={sending} className="btn h-12 w-full bg-navy text-chalk hover:bg-navy-hover disabled:opacity-70">
           {sending && <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />}
           {sending ? "Enviando…" : "Enviar mensaje"}
         </button>
         <p role="status" aria-live="polite" className="min-h-5 text-sm">
           {status.kind === "ok" && (
-            <span className="flex items-start gap-2 text-[#0f6b3a]">
+            <span className="flex items-start gap-2 text-success">
               <CircleCheck className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               {status.text}
             </span>
           )}
           {status.kind === "error" && (
-            <span className="flex items-start gap-2 text-[#b42318]">
+            <span className="flex items-start gap-2 text-danger">
               <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               <span>
                 {status.text}{" "}
@@ -173,7 +173,7 @@ function TextField({
     <div>
       <label htmlFor={id} className="form-label">
         {label}
-        {optional && <span className="font-normal text-[#5a6f8a]"> (opcional)</span>}
+        {optional && <span className="font-normal text-paper-mute"> (opcional)</span>}
       </label>
       <input
         id={id}
@@ -192,7 +192,7 @@ function TextField({
 function FieldError({ id, text }: { id: string; text?: string }) {
   if (!text) return null;
   return (
-    <p id={id} className="mt-1.5 text-[13px] text-[#b42318]">
+    <p id={id} className="mt-1.5 text-[13px] text-danger">
       {text}
     </p>
   );
