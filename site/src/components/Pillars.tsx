@@ -30,19 +30,20 @@ export function Pillars() {
   return (
     <section ref={ref} aria-label="Por qué OLPEX" data-online={online} className="readouts border-y border-stroke">
       {/* 1px gaps over the stroke color draw the hairline dividers at every breakpoint. */}
-      <div className="mx-auto grid max-w-[1200px] gap-px bg-stroke sm:grid-cols-2 lg:grid-cols-4">
+      {/* Phones get a 2×2 grid with tighter padding and type, so the band stays short. */}
+      <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-px bg-stroke lg:grid-cols-4">
         {PILLARS.map((p, n) => (
-          <div key={p.label} className="readout bg-canvas px-4 py-10 sm:px-6 lg:px-8" style={i(n)}>
+          <div key={p.label} className="readout bg-canvas px-4 py-6 sm:px-6 sm:py-10 lg:px-8" style={i(n)}>
             {/* Label and value share one font and size; only color separates them. */}
             {/* The LED hangs in the cell padding so label and value share one left edge. */}
-            <p className="heading-sm flex sm:-ml-[15px] items-center gap-2 text-[28px] text-soft">
+            <p className="heading-sm flex items-center gap-2 text-xl text-soft sm:-ml-[15px] sm:text-[28px]">
               <span className="readout-led" aria-hidden="true" />
               {p.label}
             </p>
-            <p className="readout-value heading-sm mt-1 text-[28px] text-chalk tabular-nums">
+            <p className="readout-value heading-sm mt-0.5 text-xl text-chalk tabular-nums sm:mt-1 sm:text-[28px]">
               <Counter value={p.value} run={online} delay={n * 120} />
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-mute">{p.text}</p>
+            <p className="mt-2 text-[13px] leading-normal text-mute sm:mt-3 sm:text-sm sm:leading-relaxed">{p.text}</p>
           </div>
         ))}
       </div>
