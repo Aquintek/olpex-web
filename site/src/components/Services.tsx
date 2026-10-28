@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { SERVICES } from "@/lib/content";
 import { SectionHeader } from "./SectionHeader";
 
@@ -16,7 +17,7 @@ export function Services() {
           <article key={s.id} id={s.id} className="surface-raised flex flex-col overflow-hidden rounded-md border border-stroke bg-surface/30 transition-[border-color] duration-500 ease-(--ease-out-quint) target:border-brand-2">
             <div className="relative aspect-[4/3] overflow-hidden bg-surface">
               <Image
-                src={s.photo}
+                src={asset(s.photo)}
                 alt={s.alt}
                 fill
                 sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
@@ -52,7 +53,7 @@ function Thermography() {
         {[1, 2].map((n) => (
           <div key={n} className="relative overflow-hidden">
             <Image
-              src={`/fotos/termografia-${n}.webp`}
+              src={asset(`/fotos/termografia-${n}.webp`)}
               alt={`Imagen termográfica de un tablero eléctrico, lectura ${n}`}
               fill
               sizes="(min-width: 1024px) 192px, (min-width: 640px) 25vw, 50vw"

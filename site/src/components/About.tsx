@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { SectionHeader } from "./SectionHeader";
 
 const VALUES = ["Seguridad", "Costos transparentes", "Estándares de calidad"];
@@ -8,7 +9,7 @@ export function About() {
     <section id="nosotros" className="container-page grid items-center gap-12 py-24 md:grid-cols-[1fr_1.15fr] md:py-32">
       <div className="surface-raised relative order-last aspect-[4/5] overflow-hidden rounded-md border border-stroke md:order-first">
         <Image
-          src="/fotos/instalaciones-electricas.webp"
+          src={asset("/fotos/instalaciones-electricas.webp")}
           alt="Instalación eléctrica y de ductos terminada en una planta industrial"
           fill
           sizes="(min-width: 768px) 45vw, 100vw"

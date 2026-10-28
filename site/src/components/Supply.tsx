@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { SUPPLY_ITEMS } from "@/lib/content";
 import { SectionHeader } from "./SectionHeader";
 
@@ -21,7 +22,7 @@ export function Supply() {
         </div>
         <div className="surface-raised relative aspect-[16/10] overflow-hidden rounded-md border border-stroke">
           <Image
-            src="/fotos/point-io-ab.webp"
+            src={asset("/fotos/point-io-ab.webp")}
             alt="Módulos de entradas y salidas Allen-Bradley Point I/O en un tablero"
             fill
             sizes="(min-width: 768px) 50vw, 100vw"

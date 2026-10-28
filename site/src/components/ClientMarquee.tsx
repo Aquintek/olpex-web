@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { CLIENTS } from "@/lib/content";
 import { SectionHeader } from "./SectionHeader";
 import "./client-marquee.css";
@@ -12,7 +13,7 @@ function LogoList({ hidden }: { hidden?: boolean }) {
           className="flex h-24 w-[200px] shrink-0 items-center justify-center rounded-md bg-chalk px-6 py-4"
         >
           <Image
-            src={c.logo}
+            src={asset(c.logo)}
             alt={hidden ? "" : c.name}
             width={160}
             height={64}
