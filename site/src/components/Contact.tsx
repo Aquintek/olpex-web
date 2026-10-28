@@ -3,6 +3,7 @@ import { EMAILS, PHONES, WHATSAPP_URL } from "@/lib/content";
 import { ContactForm } from "./ContactForm";
 import { CoverageMap } from "./CoverageMap";
 import { SectionHeader } from "./SectionHeader";
+import { WhatsAppIcon } from "./WhatsAppButton";
 
 export function Contact() {
   return (
@@ -30,12 +31,19 @@ export function Contact() {
             Cuéntenos qué necesita su planta y le respondemos con una propuesta técnica.
           </p>
           <ContactForm />
-          <p className="mt-2 border-t border-paper-line pt-4 text-sm text-paper-ink">
-            ¿Prefiere hablar directo?{" "}
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-navy underline underline-offset-2">
-              Escríbanos por WhatsApp
+          {/* Direct line: a full button, since the floating WhatsApp button hides in this section. */}
+          <div className="mt-2 border-t border-paper-line pt-5">
+            <p className="text-sm text-paper-ink">¿Prefiere hablar directo?</p>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn mt-3 h-12 w-full bg-whatsapp text-base font-medium text-white hover:brightness-110"
+            >
+              <WhatsAppIcon className="size-5" />
+              Escribir por WhatsApp
             </a>
-          </p>
+          </div>
         </div>
       </div>
 
