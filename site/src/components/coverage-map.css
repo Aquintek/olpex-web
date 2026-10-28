@@ -1,0 +1,81 @@
+/*
+ * Coverage map. Every "h0" segment with a round cap renders as one dot.
+ * Coverage stays quiet so the single bright HQ point carries the message.
+ */
+.coverage {
+  margin: 0;
+}
+
+.coverage-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.coverage-map .dots-cover {
+  stroke: var(--brand);
+  stroke-width: 4.4;
+  opacity: 0.6;
+}
+
+.coverage-map .hq-node {
+  fill: var(--chalk);
+  stroke: var(--canvas);
+  stroke-width: 3;
+}
+
+.coverage-map .hq-halo {
+  fill: none;
+  stroke: var(--brand-2);
+  stroke-width: 2;
+  opacity: 0.55;
+}
+
+.coverage-map .hq-ping {
+  fill: none;
+  stroke: var(--brand-2);
+  stroke-width: 2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.coverage-map .hq-label {
+  fill: var(--chalk);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  /* A canvas-colored outline keeps the label legible over the dots. */
+  paint-order: stroke;
+  stroke: var(--canvas);
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+
+/* Phones: the map shrinks, so the label grows to stay readable. */
+@media (max-width: 639px) {
+  .coverage-map .hq-label {
+    font-size: 28px;
+    stroke-width: 7px;
+  }
+}
+
+/* Three pings once the map is in view, then it rests. No endless loop. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-js] .coverage[data-visible] .hq-ping {
+    animation: hq-ping 2s var(--ease-out-quint) 700ms 3;
+  }
+
+  @keyframes hq-ping {
+    from {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(3.2);
+    }
+  }
+}

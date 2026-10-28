@@ -259,6 +259,37 @@
     }
   }
 
+  /* Form fields on the chalk contact card. Labels always visible above the field. */
+  .form-label {
+    @apply mb-1.5 block text-sm font-medium text-navy;
+  }
+  .form-input {
+    @apply block w-full rounded-xs border border-[#c4d3e4] bg-white px-3 text-base text-navy;
+    min-height: 44px;
+    padding-block: 10px;
+    transition:
+      border-color 150ms var(--ease-out-quint),
+      box-shadow 150ms var(--ease-out-quint);
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgb(21 151 196 / 0.22);
+  }
+  .form-input[aria-invalid="true"] {
+    border-color: #b42318;
+  }
+  .form-input[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgb(180 35 24 / 0.18);
+  }
+  select.form-input {
+    appearance: none;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235a6f8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
   /* Raised surface: a bright top edge where light catches it, soft depth below. */
   .surface-raised {
     box-shadow:
