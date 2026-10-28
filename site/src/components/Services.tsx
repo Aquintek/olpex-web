@@ -13,7 +13,7 @@ export function Services() {
       />
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {SERVICES.map((s, n) => (
+        {SERVICES.map((s) => (
           <article
             key={s.id}
             id={s.id}
@@ -31,8 +31,7 @@ export function Services() {
               <div className="absolute inset-0 bg-canvas/20" aria-hidden="true" />
             </div>
             <div className="flex flex-1 flex-col p-6">
-              <p className="eyebrow">0{n + 1}</p>
-              <h3 className="heading-sm mt-3 text-2xl">{s.title}</h3>
+              <h3 className="heading-sm text-2xl">{s.title}</h3>
               <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-mute">
                 {s.items.map((item) => (
                   <li key={item} className="flex gap-3">

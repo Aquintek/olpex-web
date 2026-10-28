@@ -12,6 +12,13 @@
   box-shadow: 0 0 0 3px rgb(21 151 196 / 0.18);
 }
 
+/* Phones: the cell padding is too narrow to hang the LED, so it goes. */
+@media (max-width: 639px) {
+  .readout-led {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .readouts .readout-led {
     transition:

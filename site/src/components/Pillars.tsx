@@ -33,16 +33,13 @@ export function Pillars() {
       <div className="mx-auto grid max-w-[1200px] gap-px bg-stroke sm:grid-cols-2 lg:grid-cols-4">
         {PILLARS.map((p, n) => (
           <div key={p.label} className="readout bg-canvas px-4 py-10 sm:px-6 lg:px-8" style={i(n)}>
-            <div className="flex items-center justify-between gap-4">
-              <p className="eyebrow flex items-center gap-2">
-                <span className="readout-led" aria-hidden="true" />
-                {p.label}
-              </p>
-              <span className="font-mono text-[11px] tracking-[0.08em] text-mute tabular-nums" aria-hidden="true">
-                SYS.{String(n + 1).padStart(2, "0")}
-              </span>
-            </div>
-            <p className="readout-value heading mt-4 text-[32px] text-ink tabular-nums">
+            {/* Label and value share one font and size; only color separates them. */}
+            {/* The LED hangs in the cell padding so label and value share one left edge. */}
+            <p className="heading-sm flex sm:-ml-[15px] items-center gap-2 text-[28px] text-soft">
+              <span className="readout-led" aria-hidden="true" />
+              {p.label}
+            </p>
+            <p className="readout-value heading-sm mt-1 text-[28px] text-chalk tabular-nums">
               <Counter value={p.value} run={online} delay={n * 120} />
             </p>
             <p className="mt-3 text-sm leading-relaxed text-mute">{p.text}</p>
